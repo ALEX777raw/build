@@ -192,29 +192,8 @@ function initCraneScene() {
     });
 }
 
-// Initialize when section becomes visible
-let craneInitialized = false;
-
-function checkAndInitCrane() {
-    if (craneInitialized) return;
-
-    const section = document.querySelector('.xray-section');
-    if (section && section.classList.contains('active')) {
-        craneInitialized = true;
-        initCraneScene();
-    }
-}
-
-// Check periodically and on scroll
-const observer = new MutationObserver(() => {
-    checkAndInitCrane();
-});
-
+// Initialize crane scene after page loads
 document.addEventListener('DOMContentLoaded', () => {
-    const section = document.querySelector('.xray-section');
-    if (section) {
-        observer.observe(section, { attributes: true, attributeFilter: ['class'] });
-    }
-    // Also check immediately in case section is already active
-    setTimeout(checkAndInitCrane, 100);
+    // Small delay to let the page settle
+    setTimeout(initCraneScene, 500);
 });

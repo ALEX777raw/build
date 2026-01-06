@@ -1589,7 +1589,7 @@ body::before {
     height: 100%;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.25;
+    opacity: 0.7;
 }
 
 #crane-container canvas {
@@ -1599,7 +1599,7 @@ body::before {
 
 @media (max-width: 768px) {
     #crane-container {
-        opacity: 0.15;
+        opacity: 0.5;
     }
 }
 
@@ -2903,7 +2903,7 @@ body::before {
 
     /* 3D Model container mobile */
     #crane-container {
-        opacity: 0.15;
+        opacity: 0.5;
     }
 }
 
