@@ -214,9 +214,9 @@ window.addEventListener('touchend', (e) => {
     const diff = touchStartY - touchEndY;
     const timeDiff = Date.now() - touchStartTime;
 
-    // Detect swipe: either fast short swipe or slower longer swipe
-    const isQuickSwipe = Math.abs(diff) > 30 && timeDiff < 300;
-    const isLongSwipe = Math.abs(diff) > 80;
+    // Detect swipe: more sensitive thresholds for easier navigation
+    const isQuickSwipe = Math.abs(diff) > 20 && timeDiff < 400;
+    const isLongSwipe = Math.abs(diff) > 50;
 
     if (isQuickSwipe || isLongSwipe) {
         const direction = diff > 0 ? 1 : -1;
@@ -234,7 +234,7 @@ window.addEventListener('touchend', (e) => {
             scrollCooldown = true;
             setTimeout(() => {
                 scrollCooldown = false;
-            }, 600); // Slightly faster cooldown for mobile
+            }, 500); // Faster cooldown for mobile
         }
     }
 

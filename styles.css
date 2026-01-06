@@ -2852,13 +2852,16 @@ body::before {
 
     /* Navigation dots mobile */
     .section-dots {
-        right: 8px;
-        gap: 10px;
+        right: 10px;
+        gap: 12px;
     }
 
     .section-dot {
-        width: 8px;
-        height: 8px;
+        width: 16px;
+        height: 16px;
+        /* Larger touch area */
+        padding: 8px;
+        margin: -8px;
     }
 
     .section-dot-label {
@@ -3022,13 +3025,15 @@ body::before {
     }
 
     .section-dots {
-        right: 5px;
-        gap: 6px;
+        right: 8px;
+        gap: 10px;
     }
 
     .section-dot {
-        width: 6px;
-        height: 6px;
+        width: 14px;
+        height: 14px;
+        padding: 6px;
+        margin: -6px;
     }
 
     .form-row {
