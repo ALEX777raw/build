@@ -1501,15 +1501,19 @@ body::before {
 .counter-card .corner-mark.br { bottom: 12px; right: 12px; border-left: none; border-top: none; }
 
 .counter-value {
-    font-family: 'Courier New', monospace;
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    font-weight: bold;
-    color: var(--color-silver);
+    font-family: var(--font-heading);
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 700;
+    color: #fff;
     display: flex;
     align-items: baseline;
     gap: 10px;
     margin-bottom: 10px;
-    text-shadow: 0 0 30px rgba(74, 124, 155, 0.5);
+    text-shadow:
+        0 0 10px rgba(107, 163, 199, 0.8),
+        0 0 30px rgba(107, 163, 199, 0.5),
+        0 0 60px rgba(74, 124, 155, 0.3);
+    letter-spacing: 0.03em;
     position: relative;
     z-index: 2;
     clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
@@ -2622,14 +2626,17 @@ body::before {
     }
 
     .counter-value {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
         flex-direction: row;
         align-items: baseline;
         gap: 4px;
+        text-shadow:
+            0 0 8px rgba(107, 163, 199, 0.7),
+            0 0 20px rgba(107, 163, 199, 0.4);
     }
 
     .counter-unit {
-        font-size: 0.5rem;
+        font-size: 0.55rem;
     }
 
     .counter-label {
@@ -2945,7 +2952,10 @@ body::before {
     }
 
     .counter-value {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
+        text-shadow:
+            0 0 6px rgba(107, 163, 199, 0.6),
+            0 0 15px rgba(107, 163, 199, 0.3);
     }
 
     .counter-label {
@@ -2953,7 +2963,7 @@ body::before {
     }
 
     .counter-unit {
-        font-size: 0.45rem;
+        font-size: 0.5rem;
     }
 
     .xray-grid {
