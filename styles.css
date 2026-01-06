@@ -1507,7 +1507,8 @@ body::before {
     color: #fff;
     display: flex;
     align-items: baseline;
-    gap: 10px;
+    flex-wrap: nowrap;
+    gap: 8px;
     margin-bottom: 10px;
     text-shadow:
         0 0 10px rgba(107, 163, 199, 0.8),
@@ -1526,13 +1527,18 @@ body::before {
 
 .counter-number {
     font-variant-numeric: tabular-nums;
-    min-width: 2ch;
+    white-space: nowrap;
 }
 
 .counter-unit {
-    font-size: 0.35em;
-    color: var(--color-light);
-    opacity: 0.7;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--color-accent-light);
+    opacity: 0.9;
+    white-space: nowrap;
+    align-self: flex-end;
+    margin-bottom: 0.15em;
 }
 
 .counter-label {
@@ -2626,17 +2632,16 @@ body::before {
     }
 
     .counter-value {
-        font-size: 1.5rem;
-        flex-direction: row;
-        align-items: baseline;
-        gap: 4px;
+        font-size: 1.8rem;
+        gap: 6px;
         text-shadow:
             0 0 8px rgba(107, 163, 199, 0.7),
             0 0 20px rgba(107, 163, 199, 0.4);
     }
 
     .counter-unit {
-        font-size: 0.55rem;
+        font-size: 0.6rem;
+        margin-bottom: 0.1em;
     }
 
     .counter-label {
@@ -2952,7 +2957,8 @@ body::before {
     }
 
     .counter-value {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
+        gap: 4px;
         text-shadow:
             0 0 6px rgba(107, 163, 199, 0.6),
             0 0 15px rgba(107, 163, 199, 0.3);
@@ -2964,6 +2970,7 @@ body::before {
 
     .counter-unit {
         font-size: 0.5rem;
+        margin-bottom: 0.05em;
     }
 
     .xray-grid {
