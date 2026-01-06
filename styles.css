@@ -2648,37 +2648,37 @@ body::before {
         height: 2px;
     }
 
-    /* Project cards mobile - horizontal scroll */
+    /* Project cards mobile - compact without illustrations */
     .xray-section.section-3d {
-        padding: 10px 8px;
+        padding: 8px 6px;
     }
 
     .xray-grid {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 5px;
     }
 
     .xray-card {
-        padding: 10px 8px;
+        padding: 8px 6px;
         min-height: auto;
     }
 
     .card-title {
-        font-size: 0.95rem;
-        margin: 3px 0 6px;
+        font-size: 0.85rem;
+        margin: 2px 0 4px;
     }
 
+    /* Hide illustrations on mobile to save space */
     .card-illustration {
-        height: 50px;
-        margin: 5px 0;
+        display: none;
     }
 
     .card-specs {
         grid-template-columns: repeat(4, 1fr);
-        gap: 3px;
-        margin-top: 6px;
-        padding-top: 6px;
+        gap: 2px;
+        margin-top: 4px;
+        padding-top: 4px;
     }
 
     .card-spec-item {
@@ -2690,21 +2690,28 @@ body::before {
     }
 
     .spec-value {
-        font-size: 8px;
+        font-size: 7px;
     }
 
     .card-header {
         flex-direction: row;
         align-items: center;
-        gap: 5px;
+        gap: 4px;
     }
 
     .card-tag {
-        font-size: 6px;
+        font-size: 5px;
+        padding: 1px 3px;
     }
 
     .card-ref {
-        font-size: 6px;
+        font-size: 5px;
+    }
+
+    /* Hide decorative elements on cards */
+    .card-grain,
+    .corner-mark {
+        display: none;
     }
 
     /* Form mobile */
@@ -2783,51 +2790,52 @@ body::before {
         display: none;
     }
 
-    /* Footer mobile */
+    /* Footer mobile - very compact */
     .footer-section.section-3d {
         min-height: auto !important;
-        max-height: 80vh;
-        padding: 15px 12px;
+        max-height: 75vh;
+        padding: 10px 8px;
     }
 
     .footer-cta {
-        font-size: 0.8rem;
-        margin-bottom: 15px;
-        line-height: 1.4;
+        font-size: 0.7rem;
+        margin-bottom: 10px;
+        line-height: 1.3;
     }
 
     .footer-contacts {
-        gap: 10px;
-        margin-bottom: 15px;
-    }
-
-    .footer-phone {
-        font-size: 1.2rem;
-    }
-
-    .footer-email {
-        font-size: 0.75rem;
-        padding: 8px 15px;
-    }
-
-    .footer-requisites {
-        padding: 10px 8px;
+        gap: 8px;
         margin-bottom: 10px;
     }
 
-    .footer-company {
-        font-size: 0.85rem;
+    .footer-phone {
+        font-size: 1.1rem;
+    }
+
+    .footer-email {
+        font-size: 0.65rem;
+        padding: 6px 12px;
+    }
+
+    .footer-requisites {
+        padding: 8px 6px;
         margin-bottom: 8px;
+    }
+
+    .footer-company {
+        font-size: 0.75rem;
+        margin-bottom: 5px;
     }
 
     .requisites-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 5px 10px;
-        font-size: 0.55rem;
+        gap: 3px 8px;
+        font-size: 0.5rem;
     }
 
     .footer-copy {
-        font-size: 0.6rem;
+        font-size: 0.5rem;
+        margin-top: 5px;
     }
 
     /* Navigation dots mobile */
