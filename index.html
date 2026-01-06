@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="ЛЕКМАН - производство металлоконструкций любой сложности. Полный цикл: проектирование КМ и КМД, изготовление, монтаж.">
+    <meta name="theme-color" content="#0d1520">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=yes">
+    <title>ЛЕКМАН - Металлоконструкции</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader-screen" id="loaderScreen">
+        <div class="loader-void">
+            <!-- 3D Rotating Structure -->
+            <div class="loader-cube">
+                <div class="vector"></div>
+                <div class="vector"></div>
+                <div class="vector"></div>
+                <div class="vector"></div>
+                <div class="vector"></div>
+                <div class="vector"></div>
+                <div class="vector"></div>
+                <div class="vector"></div>
+            </div>
+            <!-- Orbital rings -->
+            <div class="orbital-ring ring-1"></div>
+            <div class="orbital-ring ring-2"></div>
+            <div class="orbital-ring ring-3"></div>
+        </div>
+        <!-- Floating particles -->
+        <div class="loader-particles">
+            <div class="loader-particle" style="--delay: 0s; --x: 20%; --y: 30%;"></div>
+            <div class="loader-particle" style="--delay: 0.5s; --x: 80%; --y: 20%;"></div>
+            <div class="loader-particle" style="--delay: 1s; --x: 15%; --y: 70%;"></div>
+            <div class="loader-particle" style="--delay: 1.5s; --x: 85%; --y: 75%;"></div>
+            <div class="loader-particle" style="--delay: 2s; --x: 50%; --y: 15%;"></div>
+            <div class="loader-particle" style="--delay: 2.5s; --x: 60%; --y: 85%;"></div>
+        </div>
+        <!-- Counter & Text -->
+        <div class="loader-info">
+            <div class="loader-counter">
+                <span class="counter-digit" id="loaderPercent">000</span>
+                <span class="counter-symbol">%</span>
+            </div>
+            <div class="loader-text">ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ</div>
+            <div class="loader-bar">
+                <div class="loader-bar-fill" id="loaderBarFill"></div>
+            </div>
+            <div class="loader-status" id="loaderStatus">Загрузка ресурсов...</div>
+        </div>
+        <!-- Corner decorations -->
+        <div class="loader-corner tl"></div>
+        <div class="loader-corner tr"></div>
+        <div class="loader-corner bl"></div>
+        <div class="loader-corner br"></div>
+        <!-- Grid coordinates -->
+        <div class="loader-coords top-left">X: 0.000</div>
+        <div class="loader-coords top-right">Y: 0.000</div>
+        <div class="loader-coords bottom-left">Z: 0.000</div>
+        <div class="loader-coords bottom-right">SYS: ONLINE</div>
+    </div>
+
+    <!-- Vellum Grain Texture -->
+    <div class="vellum-grain"></div>
+
+    <!-- Global Blueprint Layer -->
+    <div class="global-blueprint">
+        <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+            <defs>
+                <pattern id="globalSmallGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(74,124,155,0.3)" stroke-width="0.3"/>
+                </pattern>
+                <pattern id="globalGrid" width="200" height="200" patternUnits="userSpaceOnUse">
+                    <rect width="200" height="200" fill="url(#globalSmallGrid)"/>
+                    <path d="M 200 0 L 0 0 0 200" fill="none" stroke="rgba(74,124,155,0.5)" stroke-width="0.5"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#globalGrid)"/>
+            <g opacity="0.4">
+                <rect x="50" y="50" width="300" height="200" stroke-dasharray="5,5"/>
+                <line x1="50" y1="150" x2="350" y2="150"/>
+                <line x1="200" y1="50" x2="200" y2="250"/>
+                <circle cx="200" cy="150" r="40" stroke-dasharray="3,3"/>
+                <rect x="1500" y="80" width="350" height="250"/>
+                <line x1="1500" y1="205" x2="1850" y2="205"/>
+                <line x1="1675" y1="80" x2="1675" y2="330"/>
+                <line x1="1500" y1="80" x2="1850" y2="330" stroke-dasharray="10,5"/>
+                <line x1="1850" y1="80" x2="1500" y2="330" stroke-dasharray="10,5"/>
+                <circle cx="960" cy="540" r="150" stroke-dasharray="5,5"/>
+                <circle cx="960" cy="540" r="100"/>
+                <circle cx="960" cy="540" r="50" stroke-dasharray="3,3"/>
+                <line x1="810" y1="540" x2="1110" y2="540"/>
+                <line x1="960" y1="390" x2="960" y2="690"/>
+                <polygon points="100,700 300,700 300,900 200,950 100,900" stroke-dasharray="5,5"/>
+                <line x1="100" y1="800" x2="300" y2="800"/>
+                <rect x="1400" y="750" width="450" height="280"/>
+                <line x1="1400" y1="890" x2="1850" y2="890"/>
+                <line x1="1550" y1="750" x2="1550" y2="1030"/>
+                <line x1="1700" y1="750" x2="1700" y2="1030"/>
+                <circle cx="1625" cy="820" r="30"/>
+                <circle cx="1775" cy="820" r="30"/>
+                <line x1="350" y1="150" x2="810" y2="540" stroke-dasharray="15,10" opacity="0.3"/>
+                <line x1="1500" y1="205" x2="1110" y2="540" stroke-dasharray="15,10" opacity="0.3"/>
+                <line x1="300" y1="800" x2="810" y2="540" stroke-dasharray="15,10" opacity="0.3"/>
+                <line x1="1400" y1="890" x2="1110" y2="540" stroke-dasharray="15,10" opacity="0.3"/>
+                <g font-family="JetBrains Mono" font-size="8" fill="rgba(74,124,155,0.6)">
+                    <text x="180" y="45">SEC-A</text>
+                    <text x="1660" y="75">SEC-B</text>
+                    <text x="940" y="380">CORE</text>
+                    <text x="180" y="695">SEC-C</text>
+                    <text x="1600" y="745">SEC-D</text>
+                </g>
+            </g>
+            <line class="scan-line-h" x1="0" y1="0" x2="1920" y2="0" stroke="rgba(107,163,199,0.3)" stroke-width="2">
+                <animate attributeName="y1" values="0;1080;0" dur="15s" repeatCount="indefinite"/>
+                <animate attributeName="y2" values="0;1080;0" dur="15s" repeatCount="indefinite"/>
+            </line>
+            <line class="scan-line-v" x1="0" y1="0" x2="0" y2="1080" stroke="rgba(107,163,199,0.2)" stroke-width="2">
+                <animate attributeName="x1" values="0;1920;0" dur="20s" repeatCount="indefinite"/>
+                <animate attributeName="x2" values="0;1920;0" dur="20s" repeatCount="indefinite"/>
+            </line>
+        </svg>
+    </div>
+
+    <!-- Scanner Effects -->
+    <div class="scanner-bar" id="scannerBar"></div>
+    <div class="scan-line-horizontal"></div>
+    <div class="scanner-data">
+        <span class="scan-status">SCAN: ACTIVE</span>
+        <span class="scan-depth">DEPTH: 450mm</span>
+        <span class="scan-material">STEEL: C345</span>
+    </div>
+    <div class="scanner-reveal"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor">
+        <div class="cursor-ring"></div>
+        <div class="cursor-cross h"></div>
+        <div class="cursor-cross h h2"></div>
+        <div class="cursor-cross v"></div>
+        <div class="cursor-cross v v2"></div>
+    </div>
+
+    <!-- X-Ray Lens Overlay -->
+    <div class="xray-lens" id="xrayLens">
+        <div class="blueprint-svg-overlay">
+            <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                    <pattern id="smallGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(107,163,199,0.1)" stroke-width="0.5"/>
+                    </pattern>
+                    <pattern id="grid" width="200" height="200" patternUnits="userSpaceOnUse">
+                        <rect width="200" height="200" fill="url(#smallGrid)"/>
+                        <path d="M 200 0 L 0 0 0 200" fill="none" stroke="rgba(107,163,199,0.2)" stroke-width="1"/>
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)"/>
+                <g class="draw-path" style="animation-delay: 0s">
+                    <line x1="100" y1="200" x2="400" y2="200" stroke-width="1"/>
+                    <line x1="400" y1="200" x2="400" y2="500" stroke-width="1"/>
+                    <line x1="100" y1="500" x2="400" y2="500" stroke-width="1"/>
+                    <line x1="100" y1="200" x2="100" y2="500" stroke-width="1"/>
+                </g>
+                <g class="draw-path" style="animation-delay: 0.5s">
+                    <line x1="500" y1="150" x2="900" y2="150" stroke-width="1.5"/>
+                    <line x1="500" y1="150" x2="500" y2="600" stroke-width="1"/>
+                    <line x1="900" y1="150" x2="900" y2="600" stroke-width="1"/>
+                    <line x1="500" y1="600" x2="900" y2="600" stroke-width="1.5"/>
+                    <line x1="700" y1="150" x2="700" y2="600" stroke-width="0.5" stroke-dasharray="5,5"/>
+                </g>
+                <g class="draw-path" style="animation-delay: 1s">
+                    <line x1="1000" y1="100" x2="1800" y2="100" stroke-width="2"/>
+                    <line x1="1000" y1="100" x2="1000" y2="700" stroke-width="1"/>
+                    <line x1="1800" y1="100" x2="1800" y2="700" stroke-width="1"/>
+                    <line x1="1000" y1="700" x2="1800" y2="700" stroke-width="2"/>
+                    <line x1="1200" y1="100" x2="1200" y2="700" stroke-width="0.5"/>
+                    <line x1="1400" y1="100" x2="1400" y2="700" stroke-width="0.5"/>
+                    <line x1="1600" y1="100" x2="1600" y2="700" stroke-width="0.5"/>
+                    <line x1="1000" y1="300" x2="1800" y2="300" stroke-width="0.5"/>
+                    <line x1="1000" y1="500" x2="1800" y2="500" stroke-width="0.5"/>
+                </g>
+                <g class="draw-path" style="animation-delay: 1.5s">
+                    <line x1="100" y1="200" x2="400" y2="500" stroke-width="0.5" opacity="0.5"/>
+                    <line x1="400" y1="200" x2="100" y2="500" stroke-width="0.5" opacity="0.5"/>
+                    <line x1="500" y1="150" x2="900" y2="600" stroke-width="0.5" opacity="0.5"/>
+                    <line x1="1000" y1="100" x2="1200" y2="300" stroke-width="0.5" opacity="0.5"/>
+                    <line x1="1600" y1="100" x2="1800" y2="300" stroke-width="0.5" opacity="0.5"/>
+                </g>
+                <g fill="var(--color-accent-light)">
+                    <circle class="pulse-node" cx="100" cy="200" r="4"/>
+                    <circle class="pulse-node" cx="400" cy="200" r="4" style="animation-delay: 0.2s"/>
+                    <circle class="pulse-node" cx="400" cy="500" r="4" style="animation-delay: 0.4s"/>
+                    <circle class="pulse-node" cx="100" cy="500" r="4" style="animation-delay: 0.6s"/>
+                    <circle class="pulse-node" cx="500" cy="150" r="4" style="animation-delay: 0.8s"/>
+                    <circle class="pulse-node" cx="900" cy="150" r="4" style="animation-delay: 1s"/>
+                    <circle class="pulse-node" cx="700" cy="375" r="6" style="animation-delay: 1.2s"/>
+                    <circle class="pulse-node" cx="1000" cy="100" r="5" style="animation-delay: 1.4s"/>
+                    <circle class="pulse-node" cx="1800" cy="100" r="5" style="animation-delay: 1.6s"/>
+                    <circle class="pulse-node" cx="1400" cy="400" r="8" style="animation-delay: 1.8s"/>
+                </g>
+                <circle class="draw-path" cx="700" cy="375" r="80" stroke-dasharray="5,5" style="animation-delay: 2s"/>
+                <circle class="draw-path" cx="1400" cy="400" r="120" style="animation-delay: 2.2s"/>
+                <circle class="draw-path" cx="1400" cy="400" r="60" stroke-dasharray="3,3" style="animation-delay: 2.4s"/>
+                <g stroke-width="0.5" opacity="0.6">
+                    <line x1="100" y1="180" x2="400" y2="180"/>
+                    <line x1="100" y1="175" x2="100" y2="185"/>
+                    <line x1="400" y1="175" x2="400" y2="185"/>
+                    <text x="250" y="175" fill="var(--color-accent-light)" font-size="10" text-anchor="middle" font-family="JetBrains Mono">L: 24.00m</text>
+                </g>
+                <g class="draw-path" style="animation-delay: 2.5s">
+                    <line x1="200" y1="800" x2="600" y2="800" stroke-width="1"/>
+                    <line x1="200" y1="800" x2="200" y2="950" stroke-width="1"/>
+                    <line x1="600" y1="800" x2="600" y2="950" stroke-width="1"/>
+                    <line x1="200" y1="950" x2="600" y2="950" stroke-width="1"/>
+                </g>
+                <g class="draw-path" style="animation-delay: 3s">
+                    <line x1="800" y1="750" x2="1500" y2="750" stroke-width="1.5"/>
+                    <line x1="800" y1="950" x2="1500" y2="950" stroke-width="1.5"/>
+                    <line x1="800" y1="750" x2="800" y2="950" stroke-width="1"/>
+                    <line x1="1500" y1="750" x2="1500" y2="950" stroke-width="1"/>
+                    <line x1="1150" y1="750" x2="1150" y2="950" stroke-width="0.5" stroke-dasharray="10,5"/>
+                </g>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Dimension Labels -->
+    <div class="lens-dimension" id="dim1">Section A-A</div>
+    <div class="lens-dimension" id="dim2">H: 12.5m</div>
+    <div class="lens-dimension" id="dim3">Steel: C345</div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+        <span>SCROLL_DEPTH</span>
+        <div class="scroll-bar-container"><div class="scroll-bar-fill" id="scrollBar"></div></div>
+    </div>
+
+    <!-- Depth Indicator -->
+    <div class="depth-indicator">
+        Z_POSITION
+        <span class="depth-value" id="depthValue">0000</span>
+    </div>
+
+    <!-- Section Navigation Dots -->
+    <nav class="section-dots" id="sectionDots">
+        <div class="section-dot active" data-section="0">
+            <span class="section-dot-label">Главная</span>
+        </div>
+        <div class="section-dot" data-section="1">
+            <span class="section-dot-label">Показатели</span>
+        </div>
+        <div class="section-dot" data-section="2">
+            <span class="section-dot-label">Объекты</span>
+        </div>
+        <div class="section-dot" data-section="3">
+            <span class="section-dot-label">Расчёт</span>
+        </div>
+        <div class="section-dot" data-section="4">
+            <span class="section-dot-label">Контакты</span>
+        </div>
+    </nav>
+
+    <!-- 3D Viewport -->
+    <div class="viewport-3d">
+        <div class="world-3d" id="world3d">
+
+            <!-- Section 0: HERO -->
+            <div class="section-3d hero-section active" style="transform: translate3d(-50%, -50%, 0px);">
+                <div id="model-container"></div>
+                <div class="hero-content">
+                    <!-- Blueprint Title -->
+                    <div class="blueprint-title">
+                        <div class="blueprint-grid"></div>
+                        <svg viewBox="0 0 600 120" class="title-svg">
+                            <defs>
+                                <pattern id="titleHatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                                    <line x1="0" y1="0" x2="0" y2="6" stroke="rgba(107,163,199,0.15)" stroke-width="1"/>
+                                </pattern>
+                            </defs>
+                            <rect width="100%" height="100%" fill="url(#titleHatch)"/>
+                            <text x="50%" y="55%" text-anchor="middle" dominant-baseline="middle" class="title-text-stroke">ЛЕКМАН</text>
+                            <text x="50%" y="55%" text-anchor="middle" dominant-baseline="middle" class="title-text-fill">ЛЕКМАН</text>
+                            <!-- Dimension lines -->
+                            <line x1="50" y1="95" x2="550" y2="95" class="dim-line"/>
+                            <line x1="50" y1="88" x2="50" y2="102" class="dim-tick"/>
+                            <line x1="550" y1="88" x2="550" y2="102" class="dim-tick"/>
+                            <text x="300" y="112" text-anchor="middle" class="dim-text">L: 500.00</text>
+                            <!-- Corner marks -->
+                            <path d="M10 10 L30 10 M10 10 L10 30" class="corner-line"/>
+                            <path d="M590 10 L570 10 M590 10 L590 30" class="corner-line"/>
+                            <path d="M10 110 L30 110 M10 110 L10 90" class="corner-line"/>
+                            <path d="M590 110 L570 110 M590 110 L590 90" class="corner-line"/>
+                        </svg>
+                    </div>
+                    <p class="hero-subtitle">Металлоконструкции любой сложности</p>
+                    <p class="hero-description">
+                        Мы предоставляем услуги полного цикла производства металлоконструкций.
+                        Наша команда ответственно подходит как к изготовлению колонн, ферм, балок,
+                        прогонов, стоек, связей и распорок с нанесением всех видов антикоррозионной защиты,
+                        так и к разработке разделов КМ и КМД, монтажу на объекте стальных конструкций,
+                        сэндвич панелей, кровли и сдаче исполнительной документации.
+                    </p>
+                </div>
+                <div class="hero-scroll-hint">
+                    <span>Листайте вниз</span>
+                    <div class="scroll-arrow"></div>
+                </div>
+            </div>
+
+            <!-- Section 1: COUNTERS -->
+            <div class="section-3d counters-section" style="transform: translate3d(-50%, -50%, -1200px);">
+                <div class="blueprint-section-title">
+                    <svg viewBox="0 0 500 60" class="section-title-svg">
+                        <text x="0" y="40" class="section-text-stroke">НАШИ ПОКАЗАТЕЛИ</text>
+                        <text x="0" y="40" class="section-text-fill">НАШИ ПОКАЗАТЕЛИ</text>
+                        <line x1="0" y1="55" x2="200" y2="55" class="title-underline"/>
+                        <line x1="0" y1="55" x2="0" y2="48" class="title-tick"/>
+                        <line x1="200" y1="55" x2="200" y2="48" class="title-tick"/>
+                    </svg>
+                </div>
+                <div class="counters-grid">
+                    <div class="counter-card" data-count="150">
+                        <div class="card-grain"></div>
+                        <div class="card-border horizontal top"></div>
+                        <div class="card-border horizontal bottom"></div>
+                        <div class="card-border vertical left"></div>
+                        <div class="card-border vertical right"></div>
+                        <div class="counter-tag">PRODUCTION</div>
+                        <div class="counter-value">
+                            <span class="counter-number">0</span>
+                            <span class="counter-unit">тонн/мес</span>
+                        </div>
+                        <div class="counter-label">Производственная мощность</div>
+                        <div class="counter-bar"><div class="counter-bar-fill"></div></div>
+                        <div class="corner-mark tl"></div>
+                        <div class="corner-mark tr"></div>
+                        <div class="corner-mark bl"></div>
+                        <div class="corner-mark br"></div>
+                    </div>
+                    <div class="counter-card" data-count="2500">
+                        <div class="card-grain"></div>
+                        <div class="card-border horizontal top"></div>
+                        <div class="card-border horizontal bottom"></div>
+                        <div class="card-border vertical left"></div>
+                        <div class="card-border vertical right"></div>
+                        <div class="counter-tag">FACILITY</div>
+                        <div class="counter-value">
+                            <span class="counter-number">0</span>
+                            <span class="counter-unit">м²</span>
+                        </div>
+                        <div class="counter-label">Площадь цеха</div>
+                        <div class="counter-bar"><div class="counter-bar-fill"></div></div>
+                        <div class="corner-mark tl"></div>
+                        <div class="corner-mark tr"></div>
+                        <div class="corner-mark bl"></div>
+                        <div class="corner-mark br"></div>
+                    </div>
+                    <div class="counter-card" data-count="847">
+                        <div class="card-grain"></div>
+                        <div class="card-border horizontal top"></div>
+                        <div class="card-border horizontal bottom"></div>
+                        <div class="card-border vertical left"></div>
+                        <div class="card-border vertical right"></div>
+                        <div class="counter-tag">PROJECTS</div>
+                        <div class="counter-value">
+                            <span class="counter-number">0</span>
+                            <span class="counter-unit">объектов</span>
+                        </div>
+                        <div class="counter-label">Выполнено проектов</div>
+                        <div class="counter-bar"><div class="counter-bar-fill"></div></div>
+                        <div class="corner-mark tl"></div>
+                        <div class="corner-mark tr"></div>
+                        <div class="corner-mark bl"></div>
+                        <div class="corner-mark br"></div>
+                    </div>
+                    <div class="counter-card" data-count="15">
+                        <div class="card-grain"></div>
+                        <div class="card-border horizontal top"></div>
+                        <div class="card-border horizontal bottom"></div>
+                        <div class="card-border vertical left"></div>
+                        <div class="card-border vertical right"></div>
+                        <div class="counter-tag">EXPERIENCE</div>
+                        <div class="counter-value">
+                            <span class="counter-number">0</span>
+                            <span class="counter-unit">лет</span>
+                        </div>
+                        <div class="counter-label">На рынке</div>
+                        <div class="counter-bar"><div class="counter-bar-fill"></div></div>
+                        <div class="corner-mark tl"></div>
+                        <div class="corner-mark tr"></div>
+                        <div class="corner-mark bl"></div>
+                        <div class="corner-mark br"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: PROJECTS -->
+            <div class="section-3d xray-section" style="transform: translate3d(-50%, -50%, -2400px);">
+                <div id="crane-container"></div>
+                <div class="blueprint-section-title">
+                    <svg viewBox="0 0 400 60" class="section-title-svg">
+                        <text x="0" y="40" class="section-text-stroke">НАШИ ОБЪЕКТЫ</text>
+                        <text x="0" y="40" class="section-text-fill">НАШИ ОБЪЕКТЫ</text>
+                        <line x1="0" y1="55" x2="180" y2="55" class="title-underline"/>
+                        <line x1="0" y1="55" x2="0" y2="48" class="title-tick"/>
+                        <line x1="180" y1="55" x2="180" y2="48" class="title-tick"/>
+                    </svg>
+                </div>
+                <div class="xray-grid">
+                    <!-- Card 1 -->
+                    <div class="xray-card">
+                        <div class="card-grain"></div>
+                        <div class="card-border horizontal top"></div>
+                        <div class="card-border horizontal bottom"></div>
+                        <div class="card-border vertical left"></div>
+                        <div class="card-border vertical right"></div>
+                        <div class="card-header">
+                            <span class="card-tag">ПРОМЫШЛЕННЫЙ</span>
+                            <span class="card-ref">КМ-2024-0847</span>
+                        </div>
+                        <h3 class="card-title">Производственный цех</h3>
+                        <div class="card-illustration">
+                            <svg viewBox="0 0 200 120" fill="none" stroke="currentColor">
+                                <path class="sketch-path" d="M20 100 L20 40 L100 20 L180 40 L180 100" stroke-width="1.5"/>
+                                <path class="sketch-path" d="M20 100 L180 100" stroke-width="1"/>
+                                <path class="sketch-path" d="M100 20 L100 100" stroke-width="0.5" stroke-dasharray="4 2"/>
+                                <path class="sketch-path" d="M50 100 L50 60 L80 60 L80 100" stroke-width="1"/>
+                                <path class="sketch-path" d="M120 70 L150 70 L150 100 L120 100 Z" stroke-width="1"/>
+                                <circle class="sketch-path" cx="135" cy="85" r="8" stroke-width="0.5"/>
+                            </svg>
+                        </div>
+                        <div class="card-specs">
+                            <div class="card-spec-item"><span class="spec-label">Масса</span><span class="spec-value">45.2 т</span></div>
+                            <div class="card-spec-item"><span class="spec-label">Пролёт</span><span class="spec-value">24 м</span></div>
+                            <div class="card-spec-item"><span class="spec-label">Высота</span><span class="spec-value">12 м</span></div>
+                            <div class="card-spec-item"><span class="spec-label">Сталь</span><span class="spec-value">С345</span></div>
+                        </div>
+                        <div class="corner-mark tl"></div>
+                        <div class="corner-mark tr"></div>
+                        <div class="corner-mark bl"></div>
+                        <div class="corner-mark br"></div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="xray-card">
+                        <div class="card-grain"></div>
+                        <div class="card-border horizontal top"></div>
+                        <div class="card-border horizontal bottom"></div>
+                        <div class="card-border vertical left"></div>
+                        <div class="card-border vertical right"></div>
+                        <div class="card-header">
+                            <span class="card-tag">СКЛАДСКОЙ</span>
+                            <span class="card-ref">КМ-2024-0912</span>
+                        </div>
+                        <h3 class="card-title">Логистический комплекс</h3>
+                        <div class="card-illustration">
+                            <svg viewBox="0 0 200 120" fill="none" stroke="currentColor">
+                                <path class="sketch-path" d="M10 100 L10 50 L190 50 L190 100" stroke-width="1.5"/>
+                                <path class="sketch-path" d="M10 100 L190 100" stroke-width="1"/>
+                                <path class="sketch-path" d="M10 50 L100 30 L190 50" stroke-width="1"/>
+                                <path class="sketch-path" d="M40 50 L40 100" stroke-width="0.5" stroke-dasharray="4 2"/>
+                                <path class="sketch-path" d="M70 50 L70 100" stroke-width="0.5" stroke-dasharray="4 2"/>
+                                <path class="sketch-path" d="M100 30 L100 100" stroke-width="0.5" stroke-dasharray="4 2"/>
+                                <path class="sketch-path" d="M130 50 L130 100" stroke-width="0.5" stroke-dasharray="4 2"/>
+                                <path class="sketch-path" d="M160 50 L160 100" stroke-width="0.5" stroke-dasharray="4 2"/>
+                                <rect class="sketch-path" x="145" y="70" width="30" height="30" stroke-width="1"/>
+                            </svg>
+                        </div>
+                        <div class="card-specs">
+                            <div class="card-spec-item"><span class="spec-label">Масса</span><span class="spec-value">128.7 т</span></div>
+                            <div class="card-spec-item"><span class="spec-label">Пролёт</span><span class="spec-value">36 м</span></div>
+                            <div class="card-spec-item"><span class="spec-label">Высота</span><span class="spec-value">18 м</span></div>
+                            <div class="card-spec-item"><span class="spec-label">Сталь</span><span class="spec-value">С255</span></div>
+                        </div>
+                        <div class="corner-mark tl"></div>
+                        <div class="corner-mark tr"></div>
+                        <div class="corner-mark bl"></div>
+                        <div class="corner-mark br"></div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="xray-card">
+                        <div class="card-grain"></div>
+                        <div class="card-border horizontal top"></div>
+                        <div class="card-border horizontal bottom"></div>
+                        <div class="card-border vertical left"></div>
+                        <div class="card-border vertical right"></div>
+                        <div class="card-header">
+                            <span class="card-tag">АНГАР</span>
+                            <span class="card-ref">КМ-2023-0634</span>
+                        </div>
+                        <h3 class="card-title">Авиационный ангар</h3>
+                        <div class="card-illustration">
+                            <svg viewBox="0 0 200 120" fill="none" stroke="currentColor">
+                                <path class="sketch-path" d="M20 100 Q100 20 180 100" stroke-width="1.5"/>
+                                <path class="sketch-path" d="M20 100 L180 100" stroke-width="1"/>
+                                <path class="sketch-path" d="M100 35 L100 100" stroke-width="0.5" stroke-dasharray="4 2"/>
+                                <path class="sketch-path" d="M60 65 L60 100" stroke-width="0.5"/>
+                                <path class="sketch-path" d="M140 65 L140 100" stroke-width="0.5"/>
+                                <path class="sketch-path" d="M70 100 L70 75 L130 75 L130 100" stroke-width="1"/>
+                                <path class="sketch-path" d="M85 100 L85 85 L115 85 L115 100" stroke-width="0.5"/>
+                            </svg>
+                        </div>
+                        <div class="card-specs">
+                            <div class="card-spec-item"><span class="spec-label">Масса</span><span class="spec-value">67.3 т</span></div>
+                            <div class="card-spec-item"><span class="spec-label">Пролёт</span><span class="spec-value">18 м</span></div>
+                            <div class="card-spec-item"><span class="spec-label">Высота</span><span class="spec-value">9 м</span></div>
+                            <div class="card-spec-item"><span class="spec-label">Сталь</span><span class="spec-value">С345</span></div>
+                        </div>
+                        <div class="corner-mark tl"></div>
+                        <div class="corner-mark tr"></div>
+                        <div class="corner-mark bl"></div>
+                        <div class="corner-mark br"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: FORM -->
+            <div class="section-3d form-section" style="transform: translate3d(-50%, -50%, -3600px);">
+                <div class="blueprint-section-title">
+                    <svg viewBox="0 0 500 60" class="section-title-svg">
+                        <text x="0" y="40" class="section-text-stroke">РАСЧЁТ СТОИМОСТИ</text>
+                        <text x="0" y="40" class="section-text-fill">РАСЧЁТ СТОИМОСТИ</text>
+                        <line x1="0" y1="55" x2="220" y2="55" class="title-underline"/>
+                        <line x1="0" y1="55" x2="0" y2="48" class="title-tick"/>
+                        <line x1="220" y1="55" x2="220" y2="48" class="title-tick"/>
+                    </svg>
+                </div>
+                <form class="spec-form">
+                    <div class="form-header">
+                        <span class="form-header-item">Дата: __.__.____</span>
+                        <span class="form-header-item">Приоритет: ________</span>
+                    </div>
+                    <div class="form-row">
+                        <label class="form-label">Наименование объекта:</label>
+                        <input type="text" class="form-input" placeholder="Склад, ангар, цех...">
+                    </div>
+                    <div class="form-row">
+                        <label class="form-label">Организация:</label>
+                        <input type="text" class="form-input" placeholder="ООО «Название»">
+                    </div>
+                    <div class="form-row">
+                        <label class="form-label">Контактное лицо:</label>
+                        <input type="text" class="form-input" placeholder="ФИО">
+                    </div>
+                    <div class="form-row">
+                        <label class="form-label">Телефон:</label>
+                        <input type="tel" class="form-input" placeholder="+7 (___) ___-__-__">
+                    </div>
+                    <div class="form-row">
+                        <label class="form-label">E-mail:</label>
+                        <input type="email" class="form-input" placeholder="email@company.ru">
+                    </div>
+                    <div class="form-row">
+                        <label class="form-label">Габариты (ДxШxВ):</label>
+                        <input type="text" class="form-input" placeholder="__ x __ x __ м">
+                    </div>
+                    <div class="form-row" style="grid-template-columns: 1fr;">
+                        <label class="form-label">Техническое задание / примечания:</label>
+                        <textarea class="form-input form-textarea" placeholder="Опишите требования к конструкции..."></textarea>
+                    </div>
+                    <div class="file-upload">
+                        <input type="file" class="file-input" accept=".pdf,.dwg,.dxf,.zip,.rar" multiple>
+                        <div class="file-upload-icon">📎</div>
+                        <div class="file-upload-text">Загрузите чертежи КМ для расчёта стоимости</div>
+                        <div class="file-upload-hint">PDF, DWG, DXF • до 50 МБ</div>
+                    </div>
+                    <button type="submit" class="submit-btn">Отправить заявку</button>
+                    <div class="form-stamp">Место<br>для<br>печати</div>
+                </form>
+            </div>
+
+            <!-- Section 4: FOOTER -->
+            <div class="section-3d footer-section" style="transform: translate3d(-50%, -50%, -4800px); min-height: 50vh; display: flex; align-items: center; justify-content: center;">
+                <div style="text-align: center;">
+                    <div class="blueprint-section-title" style="justify-content: center;">
+                        <svg viewBox="0 0 280 60" class="section-title-svg" style="max-width: 280px;">
+                            <text x="50%" y="40" text-anchor="middle" class="section-text-stroke">КОНТАКТЫ</text>
+                            <text x="50%" y="40" text-anchor="middle" class="section-text-fill">КОНТАКТЫ</text>
+                            <line x1="40" y1="55" x2="240" y2="55" class="title-underline"/>
+                            <line x1="40" y1="55" x2="40" y2="48" class="title-tick"/>
+                            <line x1="240" y1="55" x2="240" y2="48" class="title-tick"/>
+                        </svg>
+                    </div>
+                    <p class="footer-cta">Есть вопросы, техническое задание или проект?<br>Наши специалисты на связи!</p>
+                    <div class="footer-contacts">
+                        <a href="tel:+74951476729" class="footer-phone">+7-495-147-67-29</a>
+                        <a href="mailto:zakaz@lekman.ru" class="footer-email">zakaz@lekman.ru</a>
+                    </div>
+                    <div class="footer-requisites">
+                        <p class="footer-company">ООО "ЛЕКМАН"</p>
+                        <div class="requisites-grid">
+                            <span>ИНН 5044120632</span>
+                            <span>КПП 504401001</span>
+                            <span>ОКПО 46532995</span>
+                            <span>ОГРН 1205000110006</span>
+                        </div>
+                    </div>
+                    <p class="footer-copy">&copy; 2024 ЛЕКМАН • Металлоконструкции любой сложности</p>
+                </div>
+            </div>
+
+            <!-- Floating Prisms -->
+            <div class="prism" style="transform: translate3d(30vw, 20vh, -300px) rotate(45deg);"></div>
+            <div class="prism" style="transform: translate3d(-20vw, 60vh, -900px) rotate(-25deg);"></div>
+            <div class="prism" style="transform: translate3d(25vw, 30vh, -1500px) rotate(15deg);"></div>
+            <div class="prism" style="transform: translate3d(-30vw, 70vh, -2100px) rotate(65deg);"></div>
+            <div class="prism" style="transform: translate3d(35vw, 40vh, -2700px) rotate(-35deg);"></div>
+            <div class="prism" style="transform: translate3d(-25vw, 20vh, -3300px) rotate(80deg);"></div>
+            <div class="prism" style="transform: translate3d(20vw, 75vh, -3900px) rotate(-55deg);"></div>
+            <div class="prism" style="transform: translate3d(-35vw, 35vh, -4500px) rotate(40deg);"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="main.js"></script>
+    <script type="module" src="three-scene.js"></script>
+    <script type="module" src="crane-scene.js"></script>
+</body>
+</html>
