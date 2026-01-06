@@ -2503,21 +2503,23 @@ body::before {
     }
 
     .viewport-3d {
-        perspective: 1200px;
+        perspective: 800px;
     }
 
     .section-3d {
-        width: 94vw;
-        max-height: 90vh;
-        padding: 20px 15px;
-        border-radius: 8px;
+        width: 92vw;
+        max-width: 92vw;
+        height: auto;
+        max-height: 80vh;
+        padding: 12px 10px;
+        border-radius: 6px;
         overflow-y: auto;
         overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
     }
 
     .section-3d::-webkit-scrollbar {
-        width: 3px;
+        width: 2px;
     }
 
     .section-3d::-webkit-scrollbar-track {
@@ -2526,28 +2528,35 @@ body::before {
 
     .section-3d::-webkit-scrollbar-thumb {
         background: var(--color-accent);
-        border-radius: 3px;
+        border-radius: 2px;
     }
 
     /* Hero section mobile */
     .hero-section.section-3d {
-        padding: 20px 15px;
+        min-height: auto !important;
+        max-height: 80vh;
+        padding: 12px 10px;
+    }
+
+    .hero-content {
+        padding: 8px;
     }
 
     .blueprint-title {
-        max-width: 95%;
-        margin-bottom: 20px;
+        max-width: 100%;
+        margin-bottom: 10px;
     }
 
     .title-text-stroke,
     .title-text-fill {
-        font-size: 48px;
-        letter-spacing: 6px;
+        font-size: 36px;
+        letter-spacing: 3px;
     }
 
     .hero-subtitle {
-        font-size: 0.8rem;
-        letter-spacing: 2px;
+        font-size: 0.7rem;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
     }
 
     .hero-subtitle::before,
@@ -2557,105 +2566,119 @@ body::before {
     }
 
     .hero-description {
-        font-size: 0.85rem;
-        line-height: 1.7;
-        padding: 0 10px;
-        margin-top: 20px;
+        font-size: 0.75rem;
+        line-height: 1.5;
+        padding: 0 5px;
+        margin-top: 10px;
     }
 
     .hero-description::before {
-        width: 40px;
-        margin-bottom: 15px;
+        width: 30px;
+        margin-bottom: 8px;
     }
 
     .hero-scroll-hint {
-        bottom: 20px;
+        bottom: 10px;
+        position: relative;
+        margin-top: 15px;
     }
 
     .hero-scroll-hint span {
-        font-size: 0.65rem;
+        font-size: 0.6rem;
     }
 
     #model-container {
-        opacity: 0.4;
+        opacity: 0.3;
     }
 
     /* Section titles mobile */
     .blueprint-section-title {
-        margin-bottom: 15px;
+        margin-bottom: 10px;
     }
 
     .section-title-svg {
         max-width: 100%;
+        height: 40px;
     }
 
     .section-text-stroke,
     .section-text-fill {
-        font-size: 20px;
+        font-size: 18px;
         letter-spacing: 1px;
     }
 
-    /* Counters mobile */
+    /* Counters mobile - 2x2 grid compact */
+    .counters-section.section-3d {
+        padding: 10px 8px;
+    }
+
     .counters-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 10px;
+        gap: 8px;
     }
 
     .counter-card {
-        padding: 15px 12px;
+        padding: 10px 8px;
     }
 
     .counter-value {
-        font-size: 1.6rem;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 3px;
+        font-size: 1.3rem;
+        flex-direction: row;
+        align-items: baseline;
+        gap: 4px;
     }
 
     .counter-unit {
-        font-size: 0.55rem;
+        font-size: 0.5rem;
     }
 
     .counter-label {
-        font-size: 0.6rem;
-        letter-spacing: 0.5px;
+        font-size: 0.55rem;
+        letter-spacing: 0;
+        margin-top: 4px;
     }
 
     .counter-tag {
-        font-size: 6px;
-        padding: 2px 4px;
+        font-size: 5px;
+        padding: 1px 3px;
     }
 
     .counter-bar {
-        margin-top: 8px;
+        margin-top: 5px;
+        height: 2px;
     }
 
-    /* Project cards mobile */
+    /* Project cards mobile - horizontal scroll */
+    .xray-section.section-3d {
+        padding: 10px 8px;
+    }
+
     .xray-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
     }
 
     .xray-card {
-        padding: 15px 12px;
+        padding: 10px 8px;
         min-height: auto;
     }
 
     .card-title {
-        font-size: 1.1rem;
-        margin: 5px 0 10px;
+        font-size: 0.95rem;
+        margin: 3px 0 6px;
     }
 
     .card-illustration {
-        height: 70px;
-        margin: 8px 0;
+        height: 50px;
+        margin: 5px 0;
     }
 
     .card-specs {
         grid-template-columns: repeat(4, 1fr);
-        gap: 5px;
-        margin-top: 10px;
-        padding-top: 10px;
+        gap: 3px;
+        margin-top: 6px;
+        padding-top: 6px;
     }
 
     .card-spec-item {
@@ -2663,160 +2686,159 @@ body::before {
     }
 
     .spec-label {
-        font-size: 6px;
+        font-size: 5px;
     }
 
     .spec-value {
-        font-size: 9px;
+        font-size: 8px;
     }
 
     .card-header {
         flex-direction: row;
         align-items: center;
-        gap: 8px;
+        gap: 5px;
     }
 
     .card-tag {
-        font-size: 7px;
+        font-size: 6px;
     }
 
     .card-ref {
-        font-size: 7px;
+        font-size: 6px;
     }
 
     /* Form mobile */
     .form-section.section-3d {
-        padding: 15px 12px;
+        padding: 10px 8px;
     }
 
     .spec-form {
-        padding: 15px 12px;
+        padding: 10px 8px;
     }
 
     .spec-form::before {
-        font-size: 0.6rem;
-        top: -8px;
-        left: 12px;
+        font-size: 0.5rem;
+        top: -6px;
+        left: 8px;
     }
 
     .form-row {
         grid-template-columns: 1fr;
-        gap: 5px;
-        margin-bottom: 12px;
+        gap: 3px;
+        margin-bottom: 8px;
     }
 
     .form-label {
-        font-size: 0.7rem;
-        padding-bottom: 3px;
+        font-size: 0.65rem;
+        padding-bottom: 2px;
     }
 
     .form-input {
-        font-size: 0.85rem;
-        padding: 10px 8px;
+        font-size: 0.8rem;
+        padding: 8px 6px;
     }
 
     .form-textarea {
-        min-height: 60px;
-        padding: 10px;
+        min-height: 40px;
+        padding: 8px;
     }
 
     .form-header {
-        flex-direction: column;
-        gap: 8px;
-        padding-bottom: 10px;
-        margin-bottom: 15px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 5px;
+        padding-bottom: 8px;
+        margin-bottom: 10px;
     }
 
     .form-header-item {
-        font-size: 0.65rem;
+        font-size: 0.55rem;
     }
 
     .file-upload {
-        padding: 15px 12px;
-        margin-top: 15px;
+        padding: 10px 8px;
+        margin-top: 10px;
     }
 
     .file-upload-icon {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
 
     .file-upload-text {
-        font-size: 0.75rem;
+        font-size: 0.65rem;
     }
 
     .file-upload-hint {
-        font-size: 0.6rem;
+        font-size: 0.5rem;
     }
 
     .submit-btn {
-        padding: 14px;
-        font-size: 0.9rem;
+        padding: 10px;
+        font-size: 0.8rem;
         letter-spacing: 1px;
-        margin-top: 15px;
+        margin-top: 10px;
     }
 
     .form-stamp {
-        width: 50px;
-        height: 50px;
-        font-size: 0.45rem;
-        bottom: 10px;
-        right: 10px;
+        display: none;
     }
 
     /* Footer mobile */
     .footer-section.section-3d {
-        min-height: 40vh !important;
-        padding: 30px 20px;
+        min-height: auto !important;
+        max-height: 80vh;
+        padding: 15px 12px;
     }
 
     .footer-cta {
-        font-size: 0.95rem;
-        margin-bottom: 25px;
+        font-size: 0.8rem;
+        margin-bottom: 15px;
+        line-height: 1.4;
     }
 
     .footer-contacts {
-        gap: 12px;
-        margin-bottom: 30px;
+        gap: 10px;
+        margin-bottom: 15px;
     }
 
     .footer-phone {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
     }
 
     .footer-email {
-        font-size: 0.85rem;
-        padding: 10px 20px;
+        font-size: 0.75rem;
+        padding: 8px 15px;
     }
 
     .footer-requisites {
-        padding: 18px 15px;
-        margin-bottom: 20px;
+        padding: 10px 8px;
+        margin-bottom: 10px;
     }
 
     .footer-company {
-        font-size: 1rem;
-        margin-bottom: 12px;
+        font-size: 0.85rem;
+        margin-bottom: 8px;
     }
 
     .requisites-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 8px 15px;
-        font-size: 0.65rem;
+        gap: 5px 10px;
+        font-size: 0.55rem;
     }
 
     .footer-copy {
-        font-size: 0.7rem;
+        font-size: 0.6rem;
     }
 
     /* Navigation dots mobile */
     .section-dots {
-        right: 15px;
-        gap: 12px;
+        right: 8px;
+        gap: 10px;
     }
 
     .section-dot {
-        width: 10px;
-        height: 10px;
+        width: 8px;
+        height: 8px;
     }
 
     .section-dot-label {
@@ -2836,135 +2858,170 @@ body::before {
 
     /* Loader mobile */
     .loader-void {
-        width: 150px;
-        height: 150px;
-        margin-bottom: 40px;
+        width: 120px;
+        height: 120px;
+        margin-bottom: 30px;
     }
 
     .counter-digit {
-        font-size: 3rem;
+        font-size: 2.5rem;
     }
 
     .loader-text {
-        font-size: 0.65rem;
-        letter-spacing: 2px;
+        font-size: 0.6rem;
+        letter-spacing: 1px;
     }
 
     .loader-bar {
-        width: 200px;
+        width: 180px;
     }
 
-    /* Prisms - smaller on mobile */
+    /* Prisms - hide on mobile */
     .prism {
-        width: 80px;
-        height: 80px;
-        opacity: 0.3;
+        display: none;
     }
 
     /* 3D Model container mobile */
     #crane-container {
-        opacity: 0.2;
+        opacity: 0.15;
     }
 }
 
 /* Small phones */
 @media (max-width: 480px) {
+    .viewport-3d {
+        perspective: 600px;
+    }
+
     .section-3d {
-        padding: 15px 10px;
-        max-height: 88vh;
+        width: 94vw;
+        padding: 10px 8px;
+        max-height: 78vh;
+    }
+
+    .hero-section.section-3d {
+        max-height: 78vh;
     }
 
     .title-text-stroke,
     .title-text-fill {
-        font-size: 28px;
-        letter-spacing: 2px;
+        font-size: 24px;
+        letter-spacing: 1px;
     }
 
     .hero-description {
-        font-size: 0.75rem;
-        line-height: 1.5;
+        font-size: 0.7rem;
+        line-height: 1.4;
     }
 
     .blueprint-section-title {
-        margin-bottom: 10px;
+        margin-bottom: 8px;
+    }
+
+    .section-title-svg {
+        height: 30px;
+    }
+
+    .section-text-stroke,
+    .section-text-fill {
+        font-size: 14px;
     }
 
     .counters-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 8px;
+        gap: 6px;
     }
 
     .counter-card {
-        padding: 12px 10px;
+        padding: 8px 6px;
     }
 
     .counter-value {
-        font-size: 1.4rem;
+        font-size: 1.1rem;
     }
 
     .counter-label {
-        font-size: 0.55rem;
+        font-size: 0.5rem;
+    }
+
+    .counter-unit {
+        font-size: 0.45rem;
     }
 
     .xray-grid {
-        gap: 10px;
+        gap: 6px;
     }
 
     .xray-card {
-        padding: 12px 10px;
+        padding: 8px 6px;
     }
 
     .card-title {
-        font-size: 1rem;
+        font-size: 0.85rem;
     }
 
     .card-illustration {
-        height: 55px;
+        height: 40px;
     }
 
     .card-specs {
         grid-template-columns: repeat(4, 1fr);
-        gap: 4px;
+        gap: 2px;
     }
 
     .spec-label {
-        font-size: 5px;
+        font-size: 4px;
     }
 
     .spec-value {
-        font-size: 8px;
+        font-size: 7px;
     }
 
     .requisites-grid {
         grid-template-columns: 1fr;
-        gap: 5px;
+        gap: 4px;
+        font-size: 0.5rem;
     }
 
     .footer-phone {
-        font-size: 1.1rem;
+        font-size: 1rem;
+    }
+
+    .footer-email {
+        font-size: 0.65rem;
+        padding: 6px 12px;
     }
 
     .footer-cta {
-        font-size: 0.85rem;
+        font-size: 0.7rem;
     }
 
     .section-dots {
-        right: 8px;
-        gap: 8px;
+        right: 5px;
+        gap: 6px;
     }
 
     .section-dot {
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
     }
 
     .form-row {
-        margin-bottom: 10px;
+        margin-bottom: 6px;
     }
 
     .form-input {
-        padding: 8px 6px;
-        font-size: 0.8rem;
+        padding: 6px 5px;
+        font-size: 0.75rem;
+    }
+
+    .form-label {
+        font-size: 0.6rem;
+    }
+
+    .submit-btn {
+        padding: 8px;
+        font-size: 0.75rem;
     }
 
     .form-textarea {
