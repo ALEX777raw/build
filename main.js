@@ -1,44 +1,57 @@
-// ===== LOADING SCREEN =====
+// ===== LOADING SCREEN - BLUEPRINT STYLE =====
 const loaderScreen = document.getElementById('loaderScreen');
 const loaderPercent = document.getElementById('loaderPercent');
 const loaderBarFill = document.getElementById('loaderBarFill');
-const loaderStatus = document.getElementById('loaderStatus');
+const loaderCoords = document.getElementById('loaderCoords');
 
-const loadingStatuses = [
-    'Загрузка ресурсов...',
-    'Инициализация 3D...',
-    'Загрузка моделей...',
-    'Подготовка интерфейса...',
-    'Калибровка системы...',
-    'Финальная проверка...',
-    'Готово к запуску'
-];
+// Spec elements
+const specSystem = document.getElementById('specSystem');
+const spec3d = document.getElementById('spec3d');
+const specFonts = document.getElementById('specFonts');
+const specTextures = document.getElementById('specTextures');
+const specReady = document.getElementById('specReady');
 
 let loadProgress = 0;
-const loadDuration = 3500; // 3.5 seconds
+const loadDuration = 4000; // 4 seconds for blueprint effect
 const startTime = performance.now();
 
 function updateLoader() {
     const elapsed = performance.now() - startTime;
     loadProgress = Math.min((elapsed / loadDuration) * 100, 100);
 
-    // Update counter with leading zeros
-    const displayPercent = Math.floor(loadProgress).toString().padStart(3, '0');
-    loaderPercent.textContent = displayPercent;
+    // Update percentage display
+    loaderPercent.textContent = Math.floor(loadProgress) + '%';
 
     // Update progress bar
     loaderBarFill.style.width = loadProgress + '%';
 
-    // Update status text
-    const statusIndex = Math.min(Math.floor(loadProgress / 15), loadingStatuses.length - 1);
-    loaderStatus.textContent = loadingStatuses[statusIndex];
+    // Update spec status based on progress
+    if (loadProgress > 15 && specSystem) {
+        specSystem.textContent = 'ГОТОВО';
+        specSystem.style.color = '#00d4ff';
+    }
+    if (loadProgress > 35 && specFonts) {
+        specFonts.textContent = 'ГОТОВО';
+        specFonts.style.color = '#00d4ff';
+    }
+    if (loadProgress > 55 && spec3d) {
+        spec3d.textContent = 'ЗАГРУЖЕНО';
+        spec3d.style.color = '#00d4ff';
+    }
+    if (loadProgress > 75 && specTextures) {
+        specTextures.textContent = 'ГОТОВО';
+        specTextures.style.color = '#00d4ff';
+    }
+    if (specReady) {
+        specReady.textContent = Math.floor(loadProgress) + '%';
+    }
 
     // Update coordinates for effect
-    const coords = document.querySelectorAll('.loader-coords');
-    if (coords.length >= 4) {
-        coords[0].textContent = `X: ${(Math.random() * loadProgress / 100).toFixed(3)}`;
-        coords[1].textContent = `Y: ${(Math.random() * loadProgress / 100).toFixed(3)}`;
-        coords[2].textContent = `Z: ${(loadProgress / 100).toFixed(3)}`;
+    if (loaderCoords) {
+        const x = (Math.random() * 1000).toFixed(2);
+        const y = (Math.random() * 1000).toFixed(2);
+        const z = (loadProgress * 48).toFixed(2);
+        loaderCoords.textContent = `X: ${x} Y: ${y} Z: ${z}`;
     }
 
     if (loadProgress < 100) {
@@ -47,7 +60,7 @@ function updateLoader() {
         // Loading complete - start dissolve effect
         setTimeout(() => {
             startDissolveEffect();
-        }, 300);
+        }, 500);
     }
 }
 

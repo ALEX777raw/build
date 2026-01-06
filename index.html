@@ -24,56 +24,87 @@
     </script>
 </head>
 <body>
-    <!-- Loading Screen -->
+    <!-- Loading Screen - Blueprint Style -->
     <div class="loader-screen" id="loaderScreen">
-        <div class="loader-void">
-            <!-- 3D Rotating Structure -->
-            <div class="loader-cube">
-                <div class="vector"></div>
-                <div class="vector"></div>
-                <div class="vector"></div>
-                <div class="vector"></div>
-                <div class="vector"></div>
-                <div class="vector"></div>
-                <div class="vector"></div>
-                <div class="vector"></div>
+        <!-- Blueprint Grid Overlay -->
+        <div class="loader-blueprint-grid"></div>
+        <div class="loader-vignette"></div>
+
+        <!-- Main Content -->
+        <div class="loader-canvas">
+            <!-- Drawing Viewport -->
+            <div class="loader-drawing-viewport">
+                <div class="viewport-corner tl"></div>
+                <div class="viewport-corner tr"></div>
+                <div class="viewport-corner bl"></div>
+                <div class="viewport-corner br"></div>
+
+                <div class="viewport-ref top-left">SEC_REF: КМ-001/А</div>
+                <div class="viewport-ref bottom-left">МАСШТАБ: 1:100</div>
+
+                <!-- Technical Drawing SVG -->
+                <svg class="loader-drawing-svg" viewBox="0 0 200 200">
+                    <!-- Construction Circles -->
+                    <circle class="construction-circle" cx="100" cy="100" r="85" />
+                    <circle class="construction-circle reverse" cx="100" cy="100" r="65" />
+                    <circle class="construction-circle" cx="100" cy="100" r="45" />
+
+                    <!-- Steel Structure Drawing -->
+                    <path class="sketch-line delay-0" d="M100 15 L100 185" />
+                    <path class="sketch-line delay-1" d="M15 100 L185 100" />
+                    <path class="sketch-line delay-2" d="M30 30 L170 170" />
+                    <path class="sketch-line delay-3" d="M170 30 L30 170" />
+
+                    <!-- I-Beam Cross Section -->
+                    <path class="sketch-line delay-4" d="M70 60 L130 60 L130 70 L110 70 L110 130 L130 130 L130 140 L70 140 L70 130 L90 130 L90 70 L70 70 Z" />
+
+                    <!-- Dimension Lines -->
+                    <g class="dimension-group">
+                        <line class="dim-line" x1="65" y1="55" x2="135" y2="55" />
+                        <line class="dim-tick" x1="65" y1="50" x2="65" y2="60" />
+                        <line class="dim-tick" x1="135" y1="50" x2="135" y2="60" />
+                        <text class="dim-text" x="100" y="48">250mm</text>
+                    </g>
+
+                    <!-- Technical Callout -->
+                    <g class="callout-group">
+                        <path class="callout-line" d="M130 100 L160 70 L185 70" />
+                        <text class="callout-text" x="165" y="65">С345</text>
+                    </g>
+                </svg>
+
+                <!-- 3D Model Container (будет показывать превью модели) -->
+                <div class="loader-3d-preview" id="loader3dPreview"></div>
             </div>
-            <!-- Orbital rings -->
-            <div class="orbital-ring ring-1"></div>
-            <div class="orbital-ring ring-2"></div>
-            <div class="orbital-ring ring-3"></div>
-        </div>
-        <!-- Floating particles -->
-        <div class="loader-particles">
-            <div class="loader-particle" style="--delay: 0s; --x: 20%; --y: 30%;"></div>
-            <div class="loader-particle" style="--delay: 0.5s; --x: 80%; --y: 20%;"></div>
-            <div class="loader-particle" style="--delay: 1s; --x: 15%; --y: 70%;"></div>
-            <div class="loader-particle" style="--delay: 1.5s; --x: 85%; --y: 75%;"></div>
-            <div class="loader-particle" style="--delay: 2s; --x: 50%; --y: 15%;"></div>
-            <div class="loader-particle" style="--delay: 2.5s; --x: 60%; --y: 85%;"></div>
-        </div>
-        <!-- Counter & Text -->
-        <div class="loader-info">
-            <div class="loader-counter">
-                <span class="counter-digit" id="loaderPercent">000</span>
-                <span class="counter-symbol">%</span>
+
+            <!-- Data Panel -->
+            <div class="loader-data-panel">
+                <div class="loader-header">
+                    <span class="loader-status-tag">ИНИЦИАЛИЗАЦИЯ</span>
+                    <h1 class="loader-title">ЛЕКМАН</h1>
+                    <p class="loader-subtitle">Металлоконструкции</p>
+                </div>
+
+                <ul class="loader-specs">
+                    <li><span>СИСТЕМА</span><span id="specSystem">ЗАГРУЗКА...</span></li>
+                    <li><span>3D МОДЕЛЬ</span><span id="spec3d">ОЖИДАНИЕ</span></li>
+                    <li><span>ШРИФТЫ</span><span id="specFonts">ЗАГРУЗКА...</span></li>
+                    <li><span>ТЕКСТУРЫ</span><span id="specTextures">ОЖИДАНИЕ</span></li>
+                    <li><span>ГОТОВНОСТЬ</span><span id="specReady">0%</span></li>
+                </ul>
+
+                <div class="loader-progress-section">
+                    <div class="progress-meta">
+                        <span>ПРОГРЕСС ЗАГРУЗКИ</span>
+                        <span class="loader-percent" id="loaderPercent">0%</span>
+                    </div>
+                    <div class="loader-progress-bar">
+                        <div class="loader-progress-fill" id="loaderBarFill"></div>
+                    </div>
+                    <div class="loader-coords" id="loaderCoords">X: 0.00 Y: 0.00 Z: 0.00</div>
+                </div>
             </div>
-            <div class="loader-text">ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ</div>
-            <div class="loader-bar">
-                <div class="loader-bar-fill" id="loaderBarFill"></div>
-            </div>
-            <div class="loader-status" id="loaderStatus">Загрузка ресурсов...</div>
         </div>
-        <!-- Corner decorations -->
-        <div class="loader-corner tl"></div>
-        <div class="loader-corner tr"></div>
-        <div class="loader-corner bl"></div>
-        <div class="loader-corner br"></div>
-        <!-- Grid coordinates -->
-        <div class="loader-coords top-left">X: 0.000</div>
-        <div class="loader-coords top-right">Y: 0.000</div>
-        <div class="loader-coords bottom-left">Z: 0.000</div>
-        <div class="loader-coords bottom-right">SYS: ONLINE</div>
     </div>
 
     <!-- Vellum Grain Texture -->
